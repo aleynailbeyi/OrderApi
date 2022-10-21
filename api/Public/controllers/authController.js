@@ -40,8 +40,6 @@ class authController{
     /**
      * @route POST /public/v1/auth/register - User register
      * @group Auth 
-     * @produces application/json 
-     * @consumes application/json 
      * @param {register_user.model} register_user.body.required
      * @returns {Error.model}  error
      * @returns {register_user.model} 200
@@ -53,8 +51,6 @@ class authController{
     /**
      * @route POST /public/v1/auth/login - User login
      * @group Auth 
-     * @produces application/json 
-     * @consumes application/json 
      * @param {login_user.model} login_user.body.required
      * @returns {Error.model}  error
      * @returns {Response.model} 200

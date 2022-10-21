@@ -10,7 +10,7 @@ const options = {
             produces: [
                 "application/json",
             ],
-            schemes: ['HTTP','HTTPS'],
+            schemes: ['HTTP'],
             securityDefinitions: {
                 JWT: {
                     type: 'apiKey',
@@ -18,12 +18,19 @@ const options = {
                     name: 'Authorization',
                     description: "Authorization with JWT",
                 },
+                language: {
+                    type: 'apiKey',
+                    in: 'header',
+                    name: 'language',
+                    description: "language-lang",
+                },
+
             }
         },
         basedir: __dirname,
         files: [
-            '../../public/controllers/**/*.js',
-            '../../private/controllers/**/*.js'
+            '../../public/controllers/*.js',
+            '../../private/controllers/*.js'
         ]
 }
 export default options

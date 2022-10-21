@@ -9,20 +9,20 @@ class productService {
             return { status:200, data: getProductResult, message: lang(language).Product.getProducts.true, type: true };
         }
         catch (error) {
-            return { message: lang(language).Product.getProducts.false }
+            return { message: lang(language).Product.getProducts.false, type: false }
         }
     }
-    static async productAdd(req, language) {
+    static async productAdd(body, language) {
         try {
             const product = {
-                name: req.name,
-                price: req.price,
+                name: body.name,
+                price: body.price,
             }
             await db.products.create(product)
             return { data: product, message: lang(language).Product.productAdd.true, type: true };
         }
         catch (error) {
-            return { message: lang(language).Product.productAdd.false }
+            return { message: lang(language).Product.productAdd.false, type: false }
         }
     }
     static async productFindById(params, language) {
@@ -31,7 +31,7 @@ class productService {
             return { data: productID, message: lang(language).Product.productFindById.true, type: true }
         }
         catch (error) {
-            return { message: lang(language).Product.productFindById.false }
+            return { message: lang(language).Product.productFindById.false, type: false }
         }
     }
     static async deleteProduct(params, language) {
@@ -44,7 +44,7 @@ class productService {
             }
         }
         catch (error) {
-            return { message: lang(language).Product.deleteProduct.false }
+            return { message: lang(language).Product.deleteProduct.false, type: false }
         }
     }
 }

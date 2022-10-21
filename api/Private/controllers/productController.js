@@ -23,9 +23,7 @@ import 'http';
 class productController{
     /**
      * @route GET /private/v1/product/getProduct - get product
-     * @group Products 
-     * @produces application/json 
-     * @consumes application/json 
+     * @group Products
      * @returns {Error.model}  error
      * @returns {Product.model} success
      * @headers {integer} 200.X-Rate-Limit - calls per hour allowed by the user
@@ -45,8 +43,6 @@ class productController{
 	 * @route POST /private/v1/product/productAdd
 	 * @group Products
 	 * @param {new_product.model} new_product.body.required 
-	 * @produces application/json 
-	 * @consumes application/json 
 	 * @returns {Product.model} success
 	 * @returns {Error.model} error
      * @headers {integer} 200.X-Rate-Limit - calls per hour allowed by the user
@@ -60,8 +56,6 @@ class productController{
     /**
      * @route GET /private/v1/product/productFindById/{id} - get product find by id
      * @group Products
-     * @produces application/json
-     * @consumes application/json
      * @param {number} id.path.required
      * @returns {Product.model} success
      * @returns {Error.model}  error
@@ -81,8 +75,6 @@ class productController{
     /**
      * @route DELETE /private/v1/product/deleteProduct/{id} - get product find by id
      * @group Products
-     * @produces application/json
-     * @consumes application/json
      * @param {number} id.path.required
      * @returns {Product.model} success
      * @returns {Error.model}  error
