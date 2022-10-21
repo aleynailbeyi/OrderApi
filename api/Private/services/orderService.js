@@ -3,27 +3,16 @@ import db from "../../src/models";
 class orderService {
     static async createOrder(body){
         try {
-            let order_items = [];
-            console.log('order_items--->', order_items);
-            
-            const userOrder = {
-                order_id: body.order_id,
-                product_id: body.product_id,
-                count: body.count
-            }
-            const dbuserOrder = await db.orders.findOne({
-                where: {
-                    statuses: '1'
-                }
-            });
-            if(dbuserOrder.statuses[0]){
-                return { data: null, type: false}
-            }
-            const new_order = await db.orders.create(order)
+            const order = {
+				user_id: body.user_id,
+				total_price: body.total_price
+			};
+            console.log('order-->',order);
+            const new_order = await db.orders.create(order);
             if(!new_order) {
                 return { data: null, type:false } 
             }
-            return { data: userOrder,type: true}
+            return { data: new_order,type: true}
 
         } catch (error) {
             return { type: false }
