@@ -45,7 +45,7 @@ class authService {
 			}
 			const token = await jwt.sign(
 				{ user_id: user.id, },
-				"secretkeyappearshere",
+				"wrong-secret",
 				{ expiresIn: "1h" }
 			)
 			return {

@@ -1,11 +1,12 @@
 import express from 'express'
 import orderController from '../controllers/orderController';
+import checkAuth from '../middleware/checkAuth'
 
 const app = express()
 
-app.get('/getOrder', orderController.getOrderResult);
-app.post('/createOrder', orderController.userOrder);
-app.get('/getOrderFindById/:id', orderController.orderID);
-app.delete('/deleteOrder/:id', orderController.removeOrder);
+app.get('/getOrder',checkAuth, orderController.getOrderResult);
+app.post('/createOrder',checkAuth, orderController.userOrder);
+app.get('/getOrderFindById/:id',checkAuth, orderController.orderID);
+app.delete('/deleteOrder/:id',checkAuth, orderController.removeOrder);
 
 module.exports = app;

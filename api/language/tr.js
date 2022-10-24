@@ -25,5 +25,29 @@ module.exports = {
             true: "Ürün silindi",
             false: "Hata. Ürün silinemedi."
         }
+    },
+    Order: {
+        getOrder: {
+            true: "Tüm siparişler getirildi.",
+            false: "Hata. Siparişler getirilemedi.",
+        },
+        createOrder: {
+            true: "Sipariş başarıyla eklendi.",
+            false: "Hatta. Sipariş eklenemedi.",
+        },
+        getOrderFindById: {
+            true: "Sipariş id'ye göre bulundu.",
+            false: "Hata. Sipariş id'ye göre bulunamadı."
+        },
+        deleteOrder: {
+            true: "Sipariş silindi",
+            false: "Hata. Sipariş silinemedi."
+        }
+    },
+    checkAuth: {
+        sendMessage: {
+            Unauthorized: "Yetkilendirme başarısız oldu.",
+            BadReq: "Geçersiz token",
+        }
     }
 }

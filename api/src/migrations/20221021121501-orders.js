@@ -3,6 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+    await queryInterface.removeColumn('orders', 'status', { type: Sequelize.INTEGER});
     /**
      * Add altering commands here.
      *
@@ -12,6 +13,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
+    await queryInterface.addColumn('orders', 'status');
     /**
      * Add reverting commands here.
      *

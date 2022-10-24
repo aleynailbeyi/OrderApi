@@ -25,6 +25,29 @@ module.exports = {
             true: "Deleted product by id",
             false: "Error. Can not delete product by id"
         }
-
+    },
+    Order: {
+        getOrder: {
+            true: "Get all orders.",
+            false: "Error. Can not get all orders",
+        },
+        createOrder: {
+            true: "Added order successfully",
+            false: "Error. Can not add order",
+        },
+        getOrderFindById: {
+            true: "Find order by id",
+            false: "Error. Can not find order by id"
+        },
+        deleteOrder: {
+            true: "Deleted order by id",
+            false: "Error. Can not delete order by id"
+        }
+    },
+    checkAuth: {
+        sendMessage: {
+            Unauthorized: "Auth failed",
+            BadReq: "Invalid token",
+        }
     }
 }
