@@ -4,6 +4,7 @@ import db from '../../src/models';
 import lang from '../../language';
 
 class authService {
+
 	static async register(body, language) {
 		try {
 			const user = {
@@ -27,27 +28,27 @@ class authService {
 			return { data: new_user, message: lang(language).Register.NewUser, type: true };
 		}
 		catch (error) {
-			console.log("ERROR---->", error);
+			console.log('ERROR---->', error);
 			throw (error);
 		}
 	}
-	static async login(body,language) {
+	static async login(body, language) {
 		try {
 			const { email, password } = body;
 			const user = await db.users.findOne({ where: { email: email } });
 
-			if (!user || user.password != md5(password)) {
+			if (!user || user.password !== md5(password)) {
 				return ({
 					status: 401,
 					type: false,
-					message: lang(language).Login.error,
+					message: lang(language).Login.error
 				});
 			}
 			const token = await jwt.sign(
-				{ user_id: user.id, },
-				"wrong-secret",
-				{ expiresIn: "1h" }
-			)
+				{ user_id: user.id },
+				'wrong-secret',
+				{ expiresIn: '1h' }
+			);
 			return {
 				status: 200,
 				type: true,
@@ -55,12 +56,13 @@ class authService {
 				data: {
 					token
 				}
-			}
+			};
 		}
 		catch (err) {
-			console.log("ERROR---->", err);
+			console.log('ERROR---->', err);
 			throw (err);
 		}
 	}
+
 }
 export default authService;

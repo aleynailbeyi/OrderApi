@@ -1,7 +1,7 @@
-import express from 'express'
-import AuthController from '../controllers/authController'
+import express from 'express';
+import AuthController from '../controllers/authController';
 
-const app = express()
+const app = express();
 
 app.post('/register', AuthController.user_register);
 app.post('/login', AuthController.user_login);

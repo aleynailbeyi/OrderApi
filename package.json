@@ -30,6 +30,7 @@
     "@babel/register": "^7.14.5",
     "@babel/runtime": "^7.14.8",
     "babel-loader": "^8.2.2",
+    "eslint": "^8.26.0",
     "express-swagger-generator": "^1.1.17",
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.4.1"

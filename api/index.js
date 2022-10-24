@@ -23,7 +23,7 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 
 app.use('/public', pb);
-app.use('/private',pr);
+app.use('/private', pr);
 
 //expressSwagger(options);
 
@@ -31,4 +31,4 @@ server.listen(3000, () => {
 	console.log('This is root');
 });
 
-export default server
+export default server;
