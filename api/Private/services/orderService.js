@@ -3,13 +3,13 @@ import lang from '../../language';
 
 class orderService {
 
-	static async createOrder(body, language) {
+	static async createOrder(req, body, language, decoded) {
 		try {
+			console.log('order-->', decoded);
 			const order = {
-				user_id: body.decoded,
+				user_id: req.decoded.user_id,
 				total_price: body.total_price
 			};
-			console.log('order-->', order);
 			await db.orders.create(order);
 			return { data: order, message: lang(language).Order.createOrder.true, type: true };
 
