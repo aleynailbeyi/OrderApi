@@ -69,7 +69,16 @@ class basketController {
 			res.json({ type: false, message: 'Cannot retrieve basket' });
 		}
 	}
-
+	/**
+	 * @route DELETE /private/v1/basket/delete/{id} - delete product in the basket
+	 * @group Baskets
+	 * @param {number} id.path.required 
+	 * @returns {Error.model}  error
+	 * @returns {Basket.model} success
+	 * @headers {integer} 200.X-Rate-Limit - calls per hour allowed by the user
+	 * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
+	 * @security JWT
+	 */
 	static async delete(req, res) {
 		const result = await basketService.delete(req);
 		if (db.orders) {
