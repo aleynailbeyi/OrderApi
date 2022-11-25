@@ -16,6 +16,10 @@ module.exports = {
 			total_price: {
 				type: Sequelize.FLOAT
 			},
+			status: {
+				type: Sequelize.INTEGER,
+				references: { model: 'statuses', key: 'id' }
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE

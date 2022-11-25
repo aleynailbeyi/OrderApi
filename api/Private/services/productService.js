@@ -3,9 +3,13 @@ import lang from '../../language';
 
 class productService {
 
-	static async getProduct(language) {
+	static async getProduct(req) {
+		const language = req.decoded.language;
 		try {
 			const getProductResult = await db.products.findAll();
+			if (!getProductResult) {
+				return { message: lang(language).Product.getProducts.false, type: false };
+			}
 			return {
 				status: 200,
 				data: getProductResult,
@@ -14,39 +18,56 @@ class productService {
 			};
 		}
 		catch (error) {
-			return { message: lang(language).Product.getProducts.false, type: false };
+			return {type: false, message: error.message};
 		}
 	}
-	static async productAdd(body, language) {
+	static async productAdd(req) {
+		//const language = req.decoded.language;
 		try {
-			const product = {
-				name: body.name,
-				price: body.price
+			const body = req.body;
+			const product = await db.products.create(body);
+			if (!product) {
+				const result = {
+					type: false,
+					message: 'Error, product isnt created'
+				};
+				return result;
+			}
+			const result = {
+				type: true,
+				data: product,
+				message: 'product is created successfully'
 			};
-			await db.products.create(product);
-			return { data: product, message: lang(language).Product.productAdd.true, type: true };
+			return result;
 		}
 		catch (error) {
-			return { message: lang(language).Product.productAdd.false, type: false };
+			return {type: false, message: error.message};
 		}
 	}
-	static async productFindById(params, language) {
+	static async productFindById(req) {
+		const language = req.decoded.language;
 		try {
-			const productID = await db.products.findOne({ where: { id: params.id } });
+			const productID = await db.products.findOne({ where: { id: req.params.id } });
 			return { data: productID, message: lang(language).Product.productFindById.true, type: true };
 		}
 		catch (error) {
 			return { message: lang(language).Product.productFindById.false, type: false };
 		}
 	}
-	static async deleteProduct(params, language) {
+	static async deleteProduct(req) {
+		const language = req.decoded.language;
 		try {
-			const removeProduct = await db.products.destroy({ where: { id: params.id } });
-			if (removeProduct === null) {
-				console.log('Not found');
-			}
-			else {
-				return { data: removeProduct, message: lang(language).Product.deleteProduct.true, type: true };
+			const product = await db.products.destroy({
+				where: {
+					id: req.params.id
+				}
+			});
+			if (!product) { 
+				const result = {
+					type: true,
+					message: 'Product is successfully deleted.'
+				};
+				return result;
 			}
 		}
 		catch (error) {

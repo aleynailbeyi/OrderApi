@@ -13,14 +13,15 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 			models.orders.hasMany(models.order_items, { foreignKey: 'order_id'});
-			models.orders.hasMany(models.status, { foreignKey: 'order_id'});   
 			models.orders.belongsTo(models.users, {foreignKey: 'user_id'});   
+			models.orders.hasMany(models.statuses, {foreignKey: 'status'});
 		}
 	
 	}
 	orders.init({
 		user_id: DataTypes.INTEGER,
-		total_price: DataTypes.FLOAT
+		total_price: DataTypes.FLOAT,
+		status: DataTypes.INTEGER
 	}, {
 		sequelize,
 		modelName: 'orders'

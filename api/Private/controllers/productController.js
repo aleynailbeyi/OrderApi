@@ -18,7 +18,6 @@
  */
 import productService from '../services/productService';
 import db from '../../src/models';
-import 'http';
 
 class productController{
 
@@ -31,8 +30,8 @@ class productController{
 	 * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
 	 * @security JWT
 	 */
-	static async getProductResult(req, res){
-		const result = await productService.getProduct(req.body, req.headers.language);
+	static async getProduct(req, res){
+		const result = await productService.getProduct(req);
 		if (db.products) {
 			res.json({ data: result, message: 'OK', type: true });
 		}
@@ -50,9 +49,14 @@ class productController{
 	 * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
 	 * @security JWT
 	 */
-	static async product(req, res){
-		const result = await productService.productAdd(req.body, req.headers.language);
-		return res.json(result);
+	static async productAdd(req, res){
+		const result = await productService.productAdd(req);
+		if (db.products) {
+			res.json({ data: result, message: 'OK', type: true });
+		}
+		else {
+			res.json({ message: 'Can not add the product'});
+		}
 	}
 	/**
 	 * @route GET /private/v1/product/productFindById/{id} - get product find by id
@@ -64,8 +68,8 @@ class productController{
 	 * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
 	 * @security JWT
 	 */
-	static async productID(req, res){
-		const result = await productService.productFindById(req.params, req.headers.language);
+	static async productFindById(req, res){
+		const result = await productService.productFindById(req);
 		if (db.products) {
 			res.json({ data: result, message: 'OK', type: true });
 		}
@@ -83,10 +87,10 @@ class productController{
 	 * @headers {string} 200.X-Expires-After - 	date in UTC when token expires
 	 * @security JWT
 	 */
-	static async removeProduct(req, res){
-		const result = await productService.deleteProduct(req.params, req.headers.language);
+	static async deleteProduct(req, res){
+		const result = await productService.deleteProduct(req);
 		if (db.products) {
-			res.json({ data: result, message: 'OK', type: true });
+			res.json({ data: result, message: 'Product is successfully deleted.', type: true });
 		}
 		else {
 			res.json({ message: 'Can not delete by id', type: false});

@@ -9,11 +9,8 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER
 			},
-			status: {
+			status_name: {
 				type: Sequelize.STRING
-			},
-			order_id: {
-				type: Sequelize.INTEGER
 			},
 			createdAt: {
 				allowNull: false,

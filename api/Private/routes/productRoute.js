@@ -4,9 +4,9 @@ import checkAuth from '../middleware/checkAuth';
 
 const app = express();
 
-app.get('/getProduct', checkAuth, productController.getProductResult);
-app.post('/productAdd', checkAuth, productController.product);
-app.get('/productFindById/:id', checkAuth, productController.productID);
-app.delete('/deleteProduct/:id', checkAuth, productController.removeProduct);
+app.get('/getProduct', checkAuth, productController.getProduct);
+app.post('/productAdd', checkAuth, productController.productAdd);
+app.get('/productFindById/:id', checkAuth, productController.productFindById); 
+app.delete('/deleteProduct/:id', checkAuth, productController.deleteProduct);
 
 module.exports = app;

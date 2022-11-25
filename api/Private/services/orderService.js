@@ -3,22 +3,27 @@ import lang from '../../language';
 
 class orderService {
 
-	static async createOrder(req, body, language, decoded) {
+	static async complete(req) {
 		try {
-			console.log('order-->', decoded);
-			const order = {
-				user_id: req.decoded.user_id,
-				total_price: body.total_price
-			};
-			await db.orders.create(order);
-			return { data: order, message: lang(language).Order.createOrder.true, type: true };
-
-		}
+			//const language = req.decoded.language;
+			const order = await db.orders.update({
+				status: req.body.status
+			},
+			{
+				where: {
+					id: req.body.order_id
+				}
+			});
+			if (!order) {
+				return {type: false, message: 'Order not completed!!' };
+			}
+			return {type: true, message: 'Success'};
+ 		} 
 		catch (error) {
-			return { message: lang(language).Order.createOrder.false, type: false };
+			return {type: false, message: 'ERROR'};
 		}
 	}
-	static async getOrder(language) {
+	static async get(language) {
 		try {
 			const getOrderResult = await db.orders.findAll();
 			return { data: getOrderResult, message: lang(language).Order.getOrder.true, type: true };
@@ -27,23 +32,25 @@ class orderService {
 			return { message: lang(language).Order.getOrder.false, type: false };
 		}
 	}
-	static async getOrderFindById(params, language) {
+	static async getOrderFindById(req, language) {
 		try {
-			const orderID = await db.orders.findOne({ where: { id: params.id } });
+			const orderID = await db.orders.findOne({ where: { id: req.params.id } });
 			return { message: lang(language).Order.getOrderFindById.true, data: orderID, type: true };
 		}
 		catch (error) {
 			return { message: lang(language).Order.getOrderFindById.false, type: false };
 		}
 	}
-	static async deleteOrder(params, language) {
+	static async deleteOrder(req, language) {
 		try {
-			const removeOrder = await db.orders.destroy({ where: { id: params.id } });
-			if (removeOrder === null) {
-				console.log('Not Found');
-			}
-			else {
-				return { message: lang(language).Order.deleteOrder.true, data: removeOrder, type: true };
+			const removeOrder = await db.orders.destroy({
+				where: { id: req.params.id } });
+			if (!removeOrder) {
+				const result = {
+					type: true,
+					message: 'Order is successfully deleted.'
+				};
+				return result;
 			}
 		}
 		catch (error) {

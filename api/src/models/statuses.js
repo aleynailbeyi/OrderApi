@@ -3,7 +3,7 @@ const {
 	Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-	class status extends Model {
+	class statuses extends Model {
 
 		/**
 		 * Helper method for defining associations.
@@ -11,17 +11,16 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
+			models.statuses.belongsTo(models.orders, { foreignKey: 'status'});
 			// define association here
-			models.status.belongsTo(models.orders, { foreignKey: 'order_id'});   
 		}
 	
 	}
-	status.init({
-		status: DataTypes.STRING,
-		order_id: DataTypes.INTEGER
+	statuses.init({
+		status_name: DataTypes.STRING
 	}, {
 		sequelize,
-		modelName: 'status'
+		modelName: 'statuses'
 	});
-	return status;
+	return statuses;
 };
