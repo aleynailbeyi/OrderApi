@@ -77,11 +77,6 @@ class basketService {
 					}
 					const total = product.price * count + order.total_price;
 
-					console.log(total);
-					console.log(product.price);
-					console.log(count);
-					//console.log(total_price);
-
 					const updatedBasket = await db.orders.update({
 						total_price: total
 					}, 
@@ -129,6 +124,32 @@ class basketService {
 		catch (error) {
 			return { type: false, message: 'ERROR!!' };
 		}
+	}
+	static async delete(req) {
+		try {
+			const product_id = req.params.id;
+			const deleted = await db.order_items.destroy({
+				where: {
+					id: product_id
+				}
+			});
+			if (deleted === 0){
+				const result = {
+					type: false,
+					message: 'ERROR! Product did not deleted from the basket.'
+				};
+				return result;
+			}
+			const result = {
+				type: true,
+				message: 'Product is successfully deleted from the basket.'
+			};
+			return result;
+		}
+		catch (error) {
+			return { type: false, message: 'ERROR!!' };
+		}
+		
 	}
 
 }

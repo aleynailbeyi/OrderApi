@@ -69,6 +69,16 @@ class basketController {
 			res.json({ type: false, message: 'Cannot retrieve basket' });
 		}
 	}
+
+	static async delete(req, res) {
+		const result = await basketService.delete(req);
+		if (db.orders) {
+			res.json({ data: result, message: 'Product is successfully deleted in the basket.', type: true });
+		}
+		else {
+			res.json({ message: 'Can not delete by id', type: false});
+		}
+	}
 	
 }
 
