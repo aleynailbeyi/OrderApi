@@ -2,6 +2,7 @@ import md5 from 'md5';
 import jwt from 'jsonwebtoken';
 import db from '../../src/models';
 import lang from '../../language';
+import { validateRegister, validateLogin } from '../validation/authValidation';
 
 class authService {
 
@@ -21,6 +22,17 @@ class authService {
 			if (dbuser) {
 				return { data: null, message: lang(language).Register.dbUser, type: false };
 			}
+
+			const validated_user = validateRegister({
+				name: user.name,
+				lastname: user.lastname,
+				email: user.email,
+				password: user.password
+			});
+
+			if (!validated_user) {
+				return { message: 'error', type: false };
+			}
 			const new_user = await db.users.create(user);
 			if (!new_user) {
 				return { data: null, message: lang(language).Register.NotNewUser, type: false };
@@ -36,7 +48,15 @@ class authService {
 		try {
 			const { email, password } = body;
 			const user = await db.users.findOne({ where: { email: email } });
-
+			// validate the input
+			const validated_user = validateLogin({
+				email: user.email,
+				password: user.password
+			});
+			// check if there is an erro while validating
+			if (!validated_user) {
+				return { message: 'error', type: true };
+			}
 			if (!user || user.password !== md5(password)) {
 				return ({
 					status: 401,
