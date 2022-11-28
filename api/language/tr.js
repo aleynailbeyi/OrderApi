@@ -31,9 +31,9 @@ module.exports = {
 			true: 'Tüm siparişler getirildi.',
 			false: 'Hata. Siparişler getirilemedi.'
 		},
-		createOrder: {
-			true: 'Sipariş başarıyla eklendi.',
-			false: 'Hata. Sipariş eklenemedi.'
+		completeOrder: {
+			true: 'Sipariş başarıyla tamamlandı.',
+			false: 'Hata. Sipariş tamamlanamadı.'
 		},
 		getOrderFindById: {
 			true: 'Sipariş id\'ye göre bulundu.',

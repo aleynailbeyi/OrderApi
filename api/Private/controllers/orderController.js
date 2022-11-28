@@ -19,7 +19,6 @@
 
 import db from '../../src/models';
 import orderService from '../services/orderService';
-import lang from '../../language';
 
 class orderController {
 
@@ -73,12 +72,7 @@ class orderController {
 	 */
 	static async getOrderFindById(req, res) {
 		const result = await orderService.getOrderFindById(req);
-		if (db.orders) {
-			res.json({ type: true, data: result, message: 'OK' });
-		}
-		else {
-			res.json({ type: false, message: 'Can not get find by id' });
-		}
+		return res.json(result);
 	}
 	/**
 	 * @route DELETE /private/v1/order/deleteOrder/{id} - get order find by id
@@ -91,14 +85,8 @@ class orderController {
 	 * @security JWT
 	 */
 	static async deleteOrder(req, res) {
-		const language = req.decoded.language;
 		const result = await orderService.deleteOrder(req);
-		if (!db.orders.order_id) {
-			res.json({ type: false, message: lang(language).Order.deleteOrder.false });
-		}
-		else {
-			res.json({ data: result, type: true, message: 'Can not delete by id' });
-		}
+		return res.json(result);
 	}
 
 }
