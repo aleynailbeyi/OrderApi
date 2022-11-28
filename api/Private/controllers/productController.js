@@ -70,15 +70,10 @@ class productController{
 	 */
 	static async productFindById(req, res){
 		const result = await productService.productFindById(req);
-		if (db.products) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ message: 'Can not get find by id', type: false });
-		}
+		return res.json(result);
 	}
 	/**
-	 * @route DELETE /private/v1/product/deleteProduct/{id} - get product find by id
+	 * @route DELETE /private/v1/product/deleteProduct/{id} - delete product by id
 	 * @group Products
 	 * @param {number} id.path.required
 	 * @returns {Product.model} success
@@ -89,12 +84,7 @@ class productController{
 	 */
 	static async deleteProduct(req, res){
 		const result = await productService.deleteProduct(req);
-		if (db.products) {
-			res.json({ data: result, message: 'Product is successfully deleted.', type: true });
-		}
-		else {
-			res.json({ message: 'Can not delete by id', type: false});
-		}
+		return res.json(result);
 	}
 
 }

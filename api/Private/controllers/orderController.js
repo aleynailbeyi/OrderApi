@@ -19,6 +19,7 @@
 
 import db from '../../src/models';
 import orderService from '../services/orderService';
+import lang from '../../language';
 
 class orderController {
 
@@ -90,12 +91,13 @@ class orderController {
 	 * @security JWT
 	 */
 	static async deleteOrder(req, res) {
+		const language = req.decoded.language;
 		const result = await orderService.deleteOrder(req);
-		if (db.orders) {
-			res.json({ data: result, type: true, message: 'OK' });
+		if (!db.orders.order_id) {
+			res.json({ type: false, message: lang(language).Order.deleteOrder.false });
 		}
 		else {
-			res.json({ type: false, message: 'Can not delete by id' });
+			res.json({ data: result, type: true, message: 'Can not delete by id' });
 		}
 	}
 

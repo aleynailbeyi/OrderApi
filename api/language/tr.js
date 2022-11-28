@@ -18,12 +18,12 @@ module.exports = {
 			false: 'Hatta. Ürün eklenemedi.'
 		},
 		productFindById: {
-			true: 'Ürün id\'ye göre bulundu.',
-			false: 'Hata. Ürün id\'ye göre bulunamadı.'
+			true: 'Ürün id ye göre bulundu.',
+			false: 'Hata. Ürün id ye göre bulunamadı.'
 		},
 		deleteProduct: {
 			true: 'Ürün silindi',
-			false: 'Hata. Ürün silinemedi.'
+			false: 'Hata. Bu id de ürün yok.'
 		}
 	},
 	Order: {
@@ -41,7 +41,7 @@ module.exports = {
 		},
 		deleteOrder: {
 			true: 'Sipariş silindi',
-			false: 'Hata. Sipariş silinemedi.'
+			false: 'Hata. Bu id de sipariş yok.'
 		}
 	},
 	checkAuth: {
