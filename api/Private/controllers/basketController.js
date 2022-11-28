@@ -62,12 +62,7 @@ class basketController {
 	 */
 	static async add(req, res) {
 		const result = await basketService.add(req);
-		if (db.orders) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ type: false, message: 'Cannot retrieve basket' });
-		}
+		return res.json(result);
 	}
 	/**
 	 * @route DELETE /private/v1/basket/delete/{id} - delete product in the basket
@@ -81,12 +76,7 @@ class basketController {
 	 */
 	static async delete(req, res) {
 		const result = await basketService.delete(req);
-		if (db.orders) {
-			res.json({ data: result, message: 'Product is successfully deleted in the basket.', type: true });
-		}
-		else {
-			res.json({ message: 'Can not delete by id', type: false});
-		}
+		return res.json(result);
 	}
 	
 }

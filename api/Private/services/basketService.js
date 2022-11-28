@@ -1,5 +1,6 @@
 import db from '../../src/models';
 import lang from '../../language';
+import { validateAddProduct, validateDeleteProduct } from '../validation/basketValidation';
 
 class basketService {
 
@@ -49,6 +50,10 @@ class basketService {
 	static async add(req) {
 		try {
 			const { order_id, product_id, count } = req.body;
+			const validated_addPro = validateAddProduct(result1);
+			if (!validated_addPro) {
+				return { message: validated_addPro.message, type: false };
+			}
 			const result1 = await db.sequelize.transaction(async (t) => {
 				const order = await db.orders.findOne({
 					where: {
@@ -127,24 +132,25 @@ class basketService {
 	}
 	static async delete(req) {
 		try {
-			const product_id = req.params.id;
-			const deleted = await db.order_items.destroy({
+			const deleted = await db.orders.findOne({
 				where: {
-					id: product_id
+					id: req.params.id
 				}
 			});
-			if (deleted === 0){
-				const result = {
-					type: false,
-					message: 'ERROR! Product did not deleted from the basket.'
-				};
-				return result;
+			const validated_deletePro = validateDeleteProduct(deleted);
+			if (!validated_deletePro) {
+				return { message: validated_deletePro.message, type: false };
 			}
-			const result = {
-				type: true,
-				message: 'Product is successfully deleted from the basket.'
-			};
-			return result;
+			if (!deleted) {
+				const result = await db.orders.destroy({
+					where: { id: req.params.id } });
+				if (result) {
+					return ({ type: true, message: 'Product is deleted in the basket' });
+				}
+				else
+					return ({ message: 'Product isnt deleted in the basket', type: false });
+			}
+	
 		}
 		catch (error) {
 			return { type: false, message: 'ERROR!!' };

@@ -62,7 +62,7 @@ class orderService {
 			if (!validated_order) {
 				return { message: validated_order.message, type: false };
 			}
-			if (removeOrder) {
+			if (!removeOrder) {
 				const order = await db.orders.destroy({
 					where: { id: req.params.id } });
 				if (order) {
@@ -71,6 +71,8 @@ class orderService {
 				else
 					return ({ message: 'Order isnt deleted', type: false });
 			}
+			else 
+				return { type: false, message: 'status basket' };
 			
 		}
 		catch (error) {
