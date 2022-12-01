@@ -4,7 +4,7 @@
 module.exports = {
 	async up (queryInterface) {
 		await queryInterface.bulkInsert('statuses', [ {
-			status_name: 'İptal Edilen Sipariş',
+			status_name: 'Sepet',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		} ]);
