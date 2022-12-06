@@ -21,8 +21,7 @@ class productService {
 			return { type: false, message: error.message };
 		}
 	}
-	static async productAdd(req) {
-		const language = req.decoded.language;
+	static async productAdd(req, language) {
 		try {
 			const body = req.body;
 			const product = await db.products.create(body);
@@ -34,7 +33,7 @@ class productService {
 			if (!product) {
 				const result = {
 					type: false,
-					message: 'Error, product isnt created'
+					message: lang(language).Product.productAdd.false
 				};
 				return result;
 			}
@@ -49,8 +48,7 @@ class productService {
 			return { type: false, message: error.message };
 		}
 	}
-	static async productFindById(req) {
-		const language = req.decoded.language;
+	static async productFindById(req, language) {
 		try {
 			const productID = await db.products.findOne({ where: { id: req.params.id } });
 			if (!productID)
@@ -59,11 +57,10 @@ class productService {
 				return { data: productID, message: lang(language).Product.productFindById.true, type: true };
 		}
 		catch (error) {
-			return { message: lang(language).Product.productFindById.false, type: false };
+			return { message: error.message, type: false };
 		}
 	}
-	static async deleteProduct(req) {
-		const language = req.decoded.language;
+	static async deleteProduct(req, language) {
 		try {
 			const product = await db.products.findOne({ where: { id: req.params.id } });
 			const validated_product = validateDeleteProduct(product);
@@ -77,13 +74,13 @@ class productService {
 					}
 				});
 				if (productID)
-					return ({ type: true, message: 'product is deleted' });
+					return ({ type: true, message: lang(language).Product.deleteProduct.true });
 			}
 			else 
 				return ({  message: lang(language).Product.deleteProduct.false, type: false });
 		}
 		catch (error) {
-			return { message: lang(language).Product.deleteProduct.false, type: false };
+			return { message: error.message, type: false };
 		}
 	}
 

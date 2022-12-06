@@ -17,7 +17,6 @@
  * @property {string} message.required
  */
 import productService from '../services/productService';
-import db from '../../src/models';
 
 class productController{
 
@@ -32,12 +31,7 @@ class productController{
 	 */
 	static async getProduct(req, res){
 		const result = await productService.getProduct(req);
-		if (db.products) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ message: 'Cannot retrieve products', type: false });
-		}
+		return res.json(result);
 	}
 	/**
 	 * @route POST /private/v1/product/productAdd
@@ -51,12 +45,7 @@ class productController{
 	 */
 	static async productAdd(req, res){
 		const result = await productService.productAdd(req);
-		if (db.products) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ message: 'Can not add the product'});
-		}
+		return res.json(result);
 	}
 	/**
 	 * @route GET /private/v1/product/productFindById/{id} - get product find by id

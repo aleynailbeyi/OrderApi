@@ -3,16 +3,15 @@ import Joi from 'joi';
 export const validateCreateProduct = (product) => {
 	const productSchema = Joi.object({
 		name: Joi.string()
-			.alphanum()
-			.min(1)
+			.min(2)
 			.required(),
 		price: Joi.number()
-			.float()
+			.integer()
 			.required()
 	});
 	const result = productSchema.validate(product);
 	if (result.error) {
-		return { message: result.error.details[0].message, type: false };
+		return {  type: false, message: result.error.details[0].message };
 	}
 	return true;
 };
