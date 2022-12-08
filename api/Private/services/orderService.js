@@ -59,18 +59,10 @@ class orderService {
 					id: req.params.id
 				}
 			});
-			if (removeOrder) {
-				const order = await db.orders.destroy({
-					where: { id: req.params.id } });
-				if (order) {
-					return ({ type: true, message: 'order is deleted' });
-				}
-				else
-					return ({ type: false, message: 'order isnt deleted' });
-			}
-			else 
-				return ({ type: false, message: 'status basket' });
-			
+			if (!removeOrder) 
+				return ({ type: false, message: 'order isnt deleted' });
+			else
+				return ({ type: true, message: 'order is deleted' });
 		}
 		catch (error) {
 			return {  type: false, message: error.message };

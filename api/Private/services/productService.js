@@ -78,7 +78,7 @@ class productService {
 			if (!product)
 				return ({ type: false, message: lang(language).Product.deleteProduct.false });
 			else 
-				return ({  message: lang(language).Product.deleteProduct.true, type: true });
+				return ({ message: lang(language).Product.deleteProduct.true, type: true });
 		}
 		catch (error) {
 			return { message: error.message, type: false };

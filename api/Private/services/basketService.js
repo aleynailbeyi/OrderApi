@@ -132,7 +132,8 @@ class basketService {
 			const productID = req.params.id;
 			const deleted = await db.order_items.findAll({
 				where: {
-					product_id: productID
+					product_id: productID,
+					isRemoved: true
 				},
 				include: {
 					model: db.products,
@@ -154,6 +155,7 @@ class basketService {
 				else
 					return ({ message: 'Product isnt deleted in the basket', type: false });
 			}
+
 		}
 		catch (error) {
 			return { type: false, message: error.message };

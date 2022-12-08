@@ -46,22 +46,6 @@ describe('Orders', () => {
 				done();
 			});
 	});
-	it('should delete order', (done) => {
-		chai.request(app)
-			.delete(`/private/v1/order/deleteOrder/${id}`)
-			.set('language', 'tr')
-			.set('Authorization', tokenUser)
-			.end((err, res) => {
-				if (err) {
-					done(err);
-				}
-				res.body.should.have.property('message').eql('order isnt deleted');
-				res.body.should.be.a('object');
-				res.body.should.have.property('type').eql(false);
-				res.body.should.have.property('isRemoved').eql(true);
-				done();
-			});
-	});
 	it('should complete orders', (done) => {
 		chai.request(app)
 			.post('/private/v1/order/complete')
@@ -80,8 +64,7 @@ describe('Orders', () => {
 				done();
 			});
 	});
-
-	it('should delete order by id', (done) => {
+	it('should delete order', (done) => {
 		chai.request(app)
 			.delete(`/private/v1/order/deleteOrder/${id}`)
 			.set('language', 'tr')
@@ -93,7 +76,6 @@ describe('Orders', () => {
 				res.body.should.have.property('message').eql('order is deleted');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(true);
-				res.body.should.have.property('isRemoved').eql(true);
 				done();
 			});
 	});
