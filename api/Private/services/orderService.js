@@ -29,7 +29,9 @@ class orderService {
 	}
 	static async get(req, language) {
 		try {
-			const getOrderResult = await db.orders.findAll();
+			const getOrderResult = await db.orders.findAll({ where: {
+				isRemoved: false
+			}});
 			return { data: getOrderResult, message: lang(language).Order.getOrder.true, type: true };
 		}
 		catch (error) {
@@ -38,7 +40,7 @@ class orderService {
 	}
 	static async getOrderFindById(req, language) {
 		try {
-			const orderID = await db.orders.findOne({ where: { id: req.params.id } });
+			const orderID = await db.orders.findOne({ where: { id: req.params.id, isRemoved: false } });
 			if (!orderID)
 				return { message: lang(language).Order.getOrderFindById.false, type: false };
 			else
@@ -50,7 +52,9 @@ class orderService {
 	}
 	static async deleteOrder(req) {
 		try {
-			const removeOrder = await db.orders.findOne({
+			const removeOrder = await db.orders.update({
+				isRemoved: true
+			}, {
 				where: {
 					id: req.params.id
 				}

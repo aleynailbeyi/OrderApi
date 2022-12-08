@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
 	order_items.init({
 		order_id: DataTypes.INTEGER,
 		product_id: DataTypes.INTEGER,
-		count: DataTypes.INTEGER
+		count: DataTypes.INTEGER,
+		isRemoved: DataTypes.BOOLEAN
 	}, {
 		sequelize,
 		modelName: 'order_items'

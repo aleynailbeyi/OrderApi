@@ -8,7 +8,8 @@ module.exports = {
 			total_price: 3,
 			status: 1,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			isRemoved: false
 		} ]);
 		/**
 		 * Add seed commands here.

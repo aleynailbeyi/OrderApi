@@ -55,9 +55,10 @@ describe('Orders', () => {
 				if (err) {
 					done(err);
 				}
-				res.body.should.have.property('message').eql('status basket');
+				res.body.should.have.property('message').eql('order isnt deleted');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(false);
+				res.body.should.have.property('isRemoved').eql(true);
 				done();
 			});
 	});
@@ -92,6 +93,7 @@ describe('Orders', () => {
 				res.body.should.have.property('message').eql('order is deleted');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(true);
+				res.body.should.have.property('isRemoved').eql(true);
 				done();
 			});
 	});

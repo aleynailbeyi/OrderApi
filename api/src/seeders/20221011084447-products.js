@@ -7,19 +7,22 @@ module.exports = {
 			name: 'elma',
 			price: 10,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			isRemoved: false
 		},
 		{
 			name: 'karpuz',
 			price: 80,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			isRemoved: false
 		},
 		{
 			name: 'kavun',
 			price: 40,
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			isRemoved: false
 		} ], {});
 	},
 
