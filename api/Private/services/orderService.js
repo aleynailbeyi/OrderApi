@@ -1,12 +1,11 @@
 import db from '../../src/models';
 import lang from '../../language';
-import { validateCompleteOrder, validateDeleteOrder } from '../validation/orderValidation';
+import { validateCompleteOrder } from '../validation/orderValidation';
 
 class orderService {
 
-	static async complete(req) {
+	static async complete(req, language) {
 		try {
-			const language = req.decoded.language;
 			const order = await db.orders.update({
 				status: req.body.status
 			},
@@ -20,26 +19,24 @@ class orderService {
 				return { message: validated_order.message, type: false };
 			}
 			if (!order) {
-				return {type: false, message: lang(language).Order.completeOrder.false };
+				return {type: false, message: lang(language).Order.completeOrder.false};
 			}
-			return {type: true, message: lang(language).Order.completeOrder.true };
+			return {type: true, message: lang(language).Order.completeOrder.true};
  		} 
 		catch (error) {
-			return {type: false, message: 'ERROR'};
+			return {type: false, message: error.message};
 		}
 	}
-	static async get(req) {
+	static async get(req, language) {
 		try {
-			const language = req.decoded.language;
 			const getOrderResult = await db.orders.findAll();
 			return { data: getOrderResult, message: lang(language).Order.getOrder.true, type: true };
 		}
 		catch (error) {
-			return { type: false, message: 'ERROR' };
+			return { type: false, message: error.message };
 		}
 	}
-	static async getOrderFindById(req) {
-		const language = req.decoded.language;
+	static async getOrderFindById(req, language) {
 		try {
 			const orderID = await db.orders.findOne({ where: { id: req.params.id } });
 			if (!orderID)
@@ -48,7 +45,7 @@ class orderService {
 				return { message: lang(language).Order.getOrderFindById.true, data: orderID, type: true };
 		}
 		catch (error) {
-			return {  type: false, message: 'ERROR' };
+			return {  type: false, message: error.message };
 		}
 	}
 	static async deleteOrder(req) {
@@ -58,25 +55,21 @@ class orderService {
 					id: req.params.id
 				}
 			});
-			const validated_order = validateDeleteOrder(removeOrder);
-			if (!validated_order) {
-				return { message: validated_order.message, type: false };
-			}
-			if (!removeOrder) {
+			if (removeOrder) {
 				const order = await db.orders.destroy({
 					where: { id: req.params.id } });
 				if (order) {
 					return ({ type: true, message: 'order is deleted' });
 				}
 				else
-					return ({ message: 'Order isnt deleted', type: false });
+					return ({ type: false, message: 'order isnt deleted' });
 			}
 			else 
-				return { type: false, message: 'status basket' };
+				return ({ type: false, message: 'status basket' });
 			
 		}
 		catch (error) {
-			return {  type: false, message: 'ERROR' };
+			return {  type: false, message: error.message };
 		}
 	}
 

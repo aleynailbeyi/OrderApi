@@ -36,12 +36,13 @@ module.exports = {
 			false: 'Hata. Sipariş tamamlanamadı.'
 		},
 		getOrderFindById: {
-			true: 'Sipariş id\'ye göre bulundu.',
-			false: 'Hata. Sipariş id\'ye göre bulunamadı.'
+			true: 'Sipariş id ye göre bulundu.',
+			false: 'Hata. Sipariş id ye göre bulunamadı.'
 		},
 		deleteOrder: {
 			true: 'Sipariş silindi',
-			false: 'Hata. Bu id de sipariş yok.'
+			false: 'Hata. Bu id de sipariş yok.',
+			basketstatus: 'basket statusunde'
 		}
 	},
 	checkAuth: {
@@ -49,5 +50,13 @@ module.exports = {
 			Unauthorized: 'Yetkilendirme başarısız oldu.',
 			BadReq: 'Geçersiz token'
 		}
+	},
+	createbasket: {
+		true: 'Sipariş oluşturuldu',
+		false: 'Hata. Sipariş oluşturulamadı'
+	},
+	addedprobasket: {
+		true: 'Ürün başarıyla sepete eklendi',
+		false: 'Hata. Ürün eklenemedi'
 	}
 };

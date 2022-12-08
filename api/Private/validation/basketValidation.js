@@ -20,6 +20,8 @@ export const validateDeleteProduct = (deletePro) => {
 		id: Joi.number()
 			.required(),
 		order_id: Joi.number()
+			.required(),
+		status: Joi.number()
 			.required()
 	});
 	const result = AddProductSchema.validate(deletePro);

@@ -1,6 +1,6 @@
 import db from '../../src/models';
 import lang from '../../language';
-import { validateAddProduct, validateDeleteProduct } from '../validation/basketValidation';
+//import { validateDeleteProduct } from '../validation/basketValidation';
 
 class basketService {
 
@@ -41,20 +41,17 @@ class basketService {
 
 			});
 
-			return { data: result, type: true, message: 'basarılı' };
+			return { data: result, type: true, message: lang(language).createbasket.true };
 		}
 		catch (error) {
-			return { type: false, message: 'ERROR!!' };
+			return { type: false, message: error.message };
 		}
 	}
 	static async add(req) {
 		try {
 			const { order_id, product_id, count } = req.body;
-			const validated_addPro = validateAddProduct(result1);
-			if (!validated_addPro) {
-				return { message: validated_addPro.message, type: false };
-			}
 			const result1 = await db.sequelize.transaction(async (t) => {
+
 				const order = await db.orders.findOne({
 					where: {
 						id: order_id
@@ -76,7 +73,7 @@ class basketService {
 					if (!products) {
 						const result = {
 							type: false,
-							message: 'error, Product did not added to basket'
+							message: 'ERROR! Product did not added to basket.'
 						};
 						return result;
 					}
@@ -84,7 +81,7 @@ class basketService {
 
 					const updatedBasket = await db.orders.update({
 						total_price: total
-					}, 
+					},
 					{
 						where: {
 							id: order_id
@@ -112,7 +109,7 @@ class basketService {
 					if (!products) {
 						const result = {
 							type: false,
-							message: 'error,Product did not added to basket'
+							message: 'ERROR! Product did not added to basket.'
 						};
 						return result;
 					}
@@ -123,39 +120,45 @@ class basketService {
 					return result;
 				}
 			});
-			return { data: result1, type: true, message: 'basarılı' };
+			return result1;
 		}
 
 		catch (error) {
-			return { type: false, message: 'ERROR!!' };
+			return { type: false, message: error.message };
 		}
 	}
 	static async delete(req) {
 		try {
-			const deleted = await db.orders.findOne({
+			const productID = req.params.id;
+			const deleted = await db.order_items.findAll({
 				where: {
-					id: req.params.id
+					product_id: productID
+				},
+				include: {
+					model: db.products,
+					attributes: [
+						'id'
+					],
+					include: {
+						model: db.order_items
+					}
 				}
 			});
-			const validated_deletePro = validateDeleteProduct(deleted);
-			if (!validated_deletePro) {
-				return { message: validated_deletePro.message, type: false };
-			}
-			if (!deleted) {
-				const result = await db.orders.destroy({
-					where: { id: req.params.id } });
+			if (deleted) { 
+				const result = await db.order_items.destroy({
+					where: { id: req.params.id }
+				});
 				if (result) {
 					return ({ type: true, message: 'Product is deleted in the basket' });
 				}
 				else
 					return ({ message: 'Product isnt deleted in the basket', type: false });
 			}
-	
 		}
 		catch (error) {
-			return { type: false, message: 'ERROR!!' };
+			return { type: false, message: error.message };
 		}
-		
+
 	}
 
 }

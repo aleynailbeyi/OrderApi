@@ -78,7 +78,6 @@ class authService {
 			};
 		}
 		catch (err) {
-			console.log('ERROR---->', err);
 			throw (err);
 		}
 	}

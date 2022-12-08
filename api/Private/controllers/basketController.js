@@ -26,7 +26,6 @@
  * @property {integer} count
  */
 
-import db from '../../src/models';
 import basketService from '../services/basketService';
 
 class basketController {
@@ -43,12 +42,7 @@ class basketController {
 	 */
 	static async create(req, res) {
 		const result = await basketService.create(req);
-		if (db.orders) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ type: false, message: 'Cannot retrieve basket' });
-		}
+		return res.json(result);
 	}
 	/**
 	 * @route POST /private/v1/basket/add - add product

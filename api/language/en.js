@@ -23,7 +23,8 @@ module.exports = {
 		},
 		deleteProduct: {
 			true: 'Deleted product by id',
-			false: 'Error. Can not delete product by id'
+			false: 'Error. Can not delete product by id',
+			basketstatus: 'basket status'
 		}
 	},
 	Order: {
@@ -49,5 +50,13 @@ module.exports = {
 			Unauthorized: 'Auth failed',
 			BadReq: 'Invalid token'
 		}
+	},
+	createbasket: {
+		true: 'Order created successfully',
+		false: 'Order not created.'
+	},
+	addedprobasket: {
+		true: 'Product is successfully added to basket',
+		false: 'Error. Product did not added to basket'
 	}
 };

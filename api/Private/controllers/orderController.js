@@ -17,13 +17,12 @@
  * @property {string} message.required
  */
 
-import db from '../../src/models';
 import orderService from '../services/orderService';
 
 class orderController {
 
 	/**
-	 * @route POST /private/v1/order/complete - get order
+	 * @route POST /private/v1/order/complete - complete order
 	 * @group Orders
 	 * @returns {Error.model}  error
 	 * @returns {Order.model} success
@@ -33,12 +32,7 @@ class orderController {
 	 */
 	static async complete(req, res) {
 		const result = await orderService.complete(req);
-		if (db.orders) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ type: false, message: 'Cannot retrieve orders' });
-		}
+		return res.json(result);
 	}
 
 	/**
@@ -52,12 +46,7 @@ class orderController {
 	 */
 	static async get(req, res) {
 		const result = await orderService.get(req);
-		if (db.orders) {
-			res.json({ data: result, message: 'OK', type: true });
-		}
-		else {
-			res.json({ type: false, message: 'Cannot retrieve orders' });
-		}
+		return res.json(result);
 	}
 
 	/**
@@ -75,7 +64,7 @@ class orderController {
 		return res.json(result);
 	}
 	/**
-	 * @route DELETE /private/v1/order/deleteOrder/{id} - get order find by id
+	 * @route DELETE /private/v1/order/deleteOrder/{id} - delete order
 	 * @group Orders
 	 * @param {number} id.path.required
 	 * @returns {Order.model} success

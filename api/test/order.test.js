@@ -8,74 +8,88 @@ chai.use(chaiHttp);
 chai.should();
 let expect = chai.expect;
 let tokenUser;
-const id = 2;
+const id = 1;
 
-describe('Products', () => {
+describe('Orders', () => {
 	before(async () => {
 		tokenUser = await tokenTest.getToken('alle@gmail.com', '123456');
 	});
-	it('should get products', (done) => {
+	it('should get orders', (done) => {
 		chai.request(app)
-			.get('/private/v1/product/getProduct')
+			.get('/private/v1/order/get')
 			.set('language', 'tr')
 			.set('Authorization', tokenUser)
 			.end((err, res) => {
 				if (err) {
 					done(err);
 				}
-				res.body.should.have.property('message').eql('Tüm ürünler getirildi.');
+				expect(res.body.data);
+				res.body.should.have.property('message').eql('Tüm siparişler getirildi.');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(true);
 				done();
 			});
 	});
-	it('should add product', (done) => {
+	it('should orders find by id', (done) => {
 		chai.request(app)
-			.post('/private/v1/product/productAdd')
+			.get(`/private/v1/order/getOrderFindById/${id}`)
+			.set('language', 'tr')
+			.set('Authorization', tokenUser)
+			.end((err, res) => {
+				if (err) {
+					done(err);
+				}
+				expect(res.body.data);
+				res.body.should.have.property('message').eql('Sipariş id ye göre bulundu.');
+				res.body.should.be.a('object');
+				res.body.should.have.property('type').eql(true);
+				done();
+			});
+	});
+	it('should delete order', (done) => {
+		chai.request(app)
+			.delete(`/private/v1/order/deleteOrder/${id}`)
+			.set('language', 'tr')
+			.set('Authorization', tokenUser)
+			.end((err, res) => {
+				if (err) {
+					done(err);
+				}
+				res.body.should.have.property('message').eql('status basket');
+				res.body.should.be.a('object');
+				res.body.should.have.property('type').eql(false);
+				done();
+			});
+	});
+	it('should complete orders', (done) => {
+		chai.request(app)
+			.post('/private/v1/order/complete')
 			.set('language', 'tr')
 			.set('Authorization', tokenUser)
 			.send({
-				'name': 'kiraz',
-				'price': '10'
+				'order_id': id
 			})
 			.end((err, res) => {
 				if (err) {
 					done(err);
 				}
-				expect(res.body.data);
-				res.body.should.have.property('message').eql('Ürün başarıyla eklendi.');
+				res.body.should.have.property('message').eql('Sipariş başarıyla tamamlandı.');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(true);
 				done();
 			});
 	});
-	it('should product find by id', (done) => {
+
+	it('should delete order by id', (done) => {
 		chai.request(app)
-			.get(`/private/v1/product/productFindById/${id}`)
-			.set('language', 'tr')
-			.set('Authorization', tokenUser)
-			//.query({id: id})
-			.end((err, res) => {
-				if (err) {
-					done(err);
-				}
-				expect(res.body.data);
-				res.body.should.have.property('message').eql('Ürün id ye göre bulundu.');
-				res.body.should.be.a('object');
-				res.body.should.have.property('type').eql(true);
-				done();
-			});
-	});
-	it('should delete product', (done) => {
-		chai.request(app)
-			.delete(`/private/v1/product/deleteProduct/${id}`)
+			.delete(`/private/v1/order/deleteOrder/${id}`)
 			.set('language', 'tr')
 			.set('Authorization', tokenUser)
 			.end((err, res) => {
 				if (err) {
 					done(err);
 				}
-				res.body.should.have.property('message').eql('Ürün silindi');
+				res.body.should.have.property('message').eql('order is deleted');
 				res.body.should.be.a('object');
 				res.body.should.have.property('type').eql(true);
 				done();

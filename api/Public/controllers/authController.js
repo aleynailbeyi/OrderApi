@@ -57,7 +57,6 @@ class authController {
 	 * @returns {Response.model} 200
 	 */
 	static async user_login(req, res) {
-		console.log('req -->', req);
 		const result = await AuthService.login(req.body, req.headers.language);
 		if (result.type) {
 			req.headers.authorization = result.data.token;

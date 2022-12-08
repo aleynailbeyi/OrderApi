@@ -7,7 +7,16 @@ module.exports = {
 			status_name: 'Sepet',
 			createdAt: new Date(),
 			updatedAt: new Date()
-		} ]);
+		}, {
+			status_name: 'Onaylı Sipariş',
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}, {
+			status_name: 'İptal Edilen Sipariş',
+			createdAt: new Date(),
+			updatedAt: new Date()
+		}
+	 ]);
 		/**
 		 * Add seed commands here.
 		 *
