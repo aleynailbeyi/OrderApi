@@ -7,6 +7,13 @@ module.exports = {
 			password: 'char',
 			createdAt: new Date(),
 			updatedAt: new Date()
+		}, {
+			name: 'Alperen',
+			lastname: 'Taşkın',
+			email: 'alperentaskin@gmail.com',
+			password: 'ssflsmassc',
+			createdAt: new Date(),
+			updatedAt: new Date()
 		} ], {});
 	},
 	down: (queryInterface) => {
