@@ -4,9 +4,10 @@ import db from '../src/models';
 exports.roleBase = function (permission_id) {
 	return async function (req, res, next) {
 		try {
+			console.log('dbmoedll', req.body.user_id);
 			const user = await db.users.findOne({
 				where: {
-					id: req.params.id
+					id: req.body.user_id
 				},
 				include: {
 					model: db.roles,
@@ -24,7 +25,6 @@ exports.roleBase = function (permission_id) {
 					}
 				}
 			});
-			
 			console.log(JSON.parse(JSON.stringify(user)));
 			if (user){
 				next();

@@ -1,5 +1,6 @@
 import db from '../../src/models';
 import lang from '../../language';
+import {roleBase} from '../../utils/roleBase';
 import { validateCreateProduct, validateDeleteProduct } from '../validation/productValidation';
 
 class productService {
@@ -32,19 +33,13 @@ class productService {
 			if (!validated_product) {
 				return { message: validated_product.message, type: false };
 			}
-			if (!product) {
-				const result = {
-					type: false,
-					message: lang(language).Product.productAdd.false
-				};
-				return result;
+			if (roleBase(2)) {
+				return {data: product,
+					message: lang(language).Product.productAdd.true,
+					type: true };
 			}
-			const result = {
-				data: product,
-				message: lang(language).Product.productAdd.true,
-				type: true
-			};
-			return result;
+			else 
+				return { message: 'You dont have permission!', type: false };
 		}
 		catch (error) {
 			return { type: false, message: error.message };
@@ -68,14 +63,14 @@ class productService {
 				isRemoved: true
 			}, {
 				where: {
-					id: req.params.id
+					id: req.body.product_id
 				}
 			});
 			const validated_product = validateDeleteProduct(product);
 			if (!validated_product) {
 				return { message: validated_product.message, type: false };
 			}
-			if (!product)
+			if (!product && roleBase(2))
 				return ({ type: false, message: lang(language).Product.deleteProduct.false });
 			else 
 				return ({ message: lang(language).Product.deleteProduct.true, type: true });

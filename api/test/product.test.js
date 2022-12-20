@@ -29,7 +29,7 @@ describe('Products', () => {
 				done();
 			});
 	});
-	it('should add product', (done) => {
+	it('should add product', () => {
 		chai.request(app)
 			.post('/private/v1/product/productAdd')
 			.set('language', 'tr')
@@ -54,7 +54,6 @@ describe('Products', () => {
 			.get(`/private/v1/product/productFindById/${id}`)
 			.set('language', 'tr')
 			.set('Authorization', tokenUser)
-			//.query({id: id})
 			.end((err, res) => {
 				if (err) {
 					done(err);
@@ -68,15 +67,17 @@ describe('Products', () => {
 	});
 	it('should delete product', (done) => {
 		chai.request(app)
-			.delete(`/private/v1/product/deleteProduct/${id}`)
-			.set('language', 'tr')
+			.delete('/private/v1/product/deleteProduct')
 			.set('Authorization', tokenUser)
+			.send({
+				'product_id': '1'
+			})
 			.end((err, res) => {
 				if (err) {
 					done(err);
 				}
-				res.body.should.have.property('message').eql('Ürün silindi');
 				res.body.should.be.a('object');
+				res.body.should.have.property('message').eql('Ürün silindi');
 				res.body.should.have.property('type').eql(true);
 				done();
 			});
